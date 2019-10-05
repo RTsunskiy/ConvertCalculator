@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ConvertCalculator</string>
+    <string name="value_insert_hint">Введите значение</string>
+    <string name="from_tv">Из</string>
+    <string name="display_value_result">Результат</string>
+    <string name="in_string">В</string>
+
+
+    <string-array name="quantities_array">
+        <item>Площадь</item>
+        <item>Готовка</item>
+        <item>Валюта</item>
+        <item>Данные</item>
+        <item>Энергия</item>
+        <item>Топливо</item>
+        <item>Длина</item>
+        <item>Масса</item>
+        <item>Мощность</item>
+        <item>Давление</item>
+        <item>Расстояние</item>
+        <item>Другая валюта</item>
+    </string-array>
+
+    <string-array name="kilometres_values">
+        <item>Милиметр</item>
+        <item>Сантиметр</item>
+        <item>Дециметр</item>
+        <item>Метр</item>
+        <item>Километр</item>
+    </string-array>
+
+</resources>
