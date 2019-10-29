@@ -47,7 +47,7 @@ public class ConversationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_conversation, container, false);
+        rootView = inflater.inflate(R.layout.fragment_conversation, container, false);
         valueInsertET = rootView.findViewById(R.id.value_insert_et);
         displayValueET = rootView.findViewById(R.id.display_value_et);
 
