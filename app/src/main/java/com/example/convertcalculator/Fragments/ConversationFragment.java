@@ -1,38 +1,58 @@
-package com.example.convertcalculator;
+package com.example.convertcalculator.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
-import android.widget.TextView;
+import com.example.convertcalculator.Adapters.KilometerAdapter;
+import com.example.convertcalculator.R;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationFragment extends Fragment {
 
     private List<String> listOfKilometers;
     private TextView itemQuontity;
     private TextView itemResultQuontity;
     private EditText valueInsertET;
     private EditText displayValueET;
+    private View rootView;
 
+    public static final String ARG_QUANTITY_NAME = "quantityName";
+
+    public static ConversationFragment newInstance(String conversion) {
+
+        Bundle args = new Bundle();
+
+        args.putString(ARG_QUANTITY_NAME, conversion);
+
+        ConversationFragment fragment = new ConversationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conversation);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.activity_conversation, container, false);
+        valueInsertET = rootView.findViewById(R.id.value_insert_et);
+        displayValueET = rootView.findViewById(R.id.display_value_et);
 
-        valueInsertET = findViewById(R.id.value_insert_et);
-        displayValueET = findViewById(R.id.display_value_et);
-
-        itemResultQuontity = findViewById(R.id.item_quantity_result_tv);
-        itemQuontity = findViewById(R.id.item_quantity_tv);
+        itemResultQuontity = rootView.findViewById(R.id.item_quantity_result_tv);
+        itemQuontity = rootView.findViewById(R.id.item_quantity_tv);
         initKilometerRVAdapter();
         initKilometerResultRVAdapter();
 
@@ -54,30 +74,27 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().getStringExtra("Distance").equals("Расстояние")) {
-            setTitle(getIntent().getStringExtra("Distance"));
-        }
-
+       return rootView;
     }
 
     private void initKilometerRVAdapter() {
-        RecyclerView recyclerView = findViewById(R.id.from_rv);
-        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        RecyclerView recyclerView = rootView.findViewById(R.id.from_rv);
+        LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         listOfKilometers = Arrays.asList(getResources().getStringArray(R.array.kilometres_values));
         KilometerAdapter kilometerAdapter = new KilometerAdapter(listOfKilometers, itemQuontity);
-        DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration decoration = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(decoration);
         recyclerView.setAdapter(kilometerAdapter);
     }
 
     private void initKilometerResultRVAdapter() {
-        RecyclerView recyclerView = findViewById(R.id.in_rv);
-        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        RecyclerView recyclerView = rootView.findViewById(R.id.in_rv);
+        LinearLayoutManager manager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         listOfKilometers = Arrays.asList(getResources().getStringArray(R.array.kilometres_values));
         KilometerAdapter kilometerAdapter = new KilometerAdapter(listOfKilometers, itemResultQuontity);
-        DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration decoration = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(decoration);
         recyclerView.setAdapter(kilometerAdapter);
     }
@@ -89,7 +106,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (resultMeasurment.equals("Милиметр")) {
             out = incomeValueInKilometres * 1000000.0;
-                outputValue = Double.toString(out);}
+            outputValue = Double.toString(out);}
         else if (resultMeasurment.equals("Сантиметр")) {
             out = incomeValueInKilometres * 100000.0;
             outputValue = Double.toString(out);}
@@ -111,7 +128,7 @@ public class ConversationActivity extends AppCompatActivity {
         double output = 0.0;
 
         if (incomeMeasurment.equals("Милиметр")) {
-                output = incomeValue / 1000000.0;}
+            output = incomeValue / 1000000.0;}
         else if (incomeMeasurment.equals("Сантиметр")) {
             output = incomeValue / 100000.0;}
         else if (incomeMeasurment.equals("Дециметр")) {
@@ -121,8 +138,6 @@ public class ConversationActivity extends AppCompatActivity {
         else if (incomeMeasurment.equals("Километр")) {
             output = incomeValue / 1.0;}
 
-   return output;
+        return output;
     }
 }
-
-

@@ -1,27 +1,29 @@
-package com.example.convertcalculator;
+package com.example.convertcalculator.Adapters;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.convertcalculator.Fragments.ConversationFragment;
+import com.example.convertcalculator.R;
 
 import java.util.List;
 
 public class QuantitiesAdapter extends RecyclerView.Adapter<QuantitiesAdapter.QuantitiesHolder> {
 
     private List<String> listOfQuantities;
-    private Context context;
+    private FragmentActivity context;
 
-    public QuantitiesAdapter(List<String> listOfQuantities, Context context) {
+    public QuantitiesAdapter(List<String> listOfQuantities, FragmentActivity context) {
         this.listOfQuantities = listOfQuantities;
         this.context = context;
     }
-
 
 
     @NonNull
@@ -39,9 +41,12 @@ public class QuantitiesAdapter extends RecyclerView.Adapter<QuantitiesAdapter.Qu
             @Override
             public void onClick(View view) {
                 if (item.equals("Расстояние")) {
-                Intent intent = new Intent(context, ConversationActivity.class);
-                intent.putExtra("Distance", item);
-                context.startActivity(intent);}
+                    context.getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.root_linear, ConversationFragment.newInstance(item))
+                            .commit();
+                }
             }
         });
     }
